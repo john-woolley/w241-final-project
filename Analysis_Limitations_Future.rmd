@@ -179,6 +179,4 @@ When considering the population of the study, another fundamental question needs
 
 ## Citations
 
-- MTurk Demographics - https://www.ipeirotis.com/wp-content/uploads/2017/12/wsdmf074-difallahA.pdf
-
-
+- Djellel Difallah, Elena Filatova, and Panos Ipeirotis. 2018. Demographics and Dynamics of Mechanical Turk Workers. In Proceedings of the Eleventh ACM International Conference on Web Search and Data Mining (WSDM '18). Association for Computing Machinery, New York, NY, USA, 135–143. DOI:https://doi.org/10.1145/3159652.3159661
