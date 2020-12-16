@@ -6,7 +6,7 @@ date: "December 16, 2020"
 indent: true
 header-includes:
  - \setlength{\parindent}{4em}
- - \setlength{\parskip}{1em}
+ - \setlength{\parskip}{.5em}
  - \usepackage{indentfirst}
 output: pdf_document
 
@@ -245,14 +245,14 @@ mtext("d)", side=side, line=line, adj=adj)
 mtext('figure label',side=1,outer=TRUE,line=1)
 ```
 
-For the Control Group, both questions used the same graph with no variation or skewness. As a result, it would be expected that the respondents would reply with the same value for both questions, rendering the mean difference as zero. As seen in **Figure X** a, the majority of respondents had zero or close to zero mean deltas. However there are some outliers at -90 and -50 respectively. As a result, the average mean delta for the control group is -6.08. This was the first sign that the quality of respondents will need additional scrutiny. Similar outliers also appear in Left-Skew (**Figure X** c) and Right-Skew (**Figure X** d) groups. 
+For the Control Group, both questions used the same graph with no variation or skewness. As a result, it would be expected that the respondents would reply with the same value for both questions, rendering the mean difference as zero. As seen in Figure 6 a, the majority of respondents had zero or close to zero mean deltas. However there are some outliers at -90 and -50 respectively. As a result, the average mean delta for the control group is -6.08. This was the first sign that the quality of respondents will need additional scrutiny. Similar outliers also appear in Left-Skew (Figure 6 c) and Right-Skew (Figure 6 d) groups. 
 
 ```{r}
 kable(pidt,caption = "Percentage Identifying Treatment Condition",align="c")
 ```
 
 
-Because of some of these suspicious answers, a follow-up examination of respondent comprehension was conducted using the results of the survey debriefing question. In this question, respondents were asked to identify the difference between the first and second graphs they were presented. The expectation was that respondents who understood the question and were able to interpret the graphs presented to them would be able to point out the differences between the graphs. However, as seen in **Table X**, the overall identification of treatment was very poor. As part of this analysis, perfect identification as well as partial identification were examined. A respondent was considered to have perfectly identified the treatment if they responded with only the factors that changed between their graphs. If they mentioned factors that did not change, they were placed into partial identification instead. Less than 50% of respondents correctly identified any factor that changed between graphs. This signaled that there were issues with the results that were collected. Either the respondents were unable to interpret the graphs given to them, or they had begun to fill out the survey on autopilot. Both of these scenarios will hinder the accuracy of the results. However we had no a priori principles by which to exclude outliers, therefore they were left in the study.
+Because of some of these suspicious answers, a follow-up examination of respondent comprehension was conducted using the results of the survey debriefing question. In this question, respondents were asked to identify the difference between the first and second graphs they were presented. The expectation was that respondents who understood the question and were able to interpret the graphs presented to them would be able to point out the differences between the graphs. However, as seen in Table 3, the overall identification of treatment was very poor. As part of this analysis, perfect identification as well as partial identification were examined. A respondent was considered to have perfectly identified the treatment if they responded with only the factors that changed between their graphs. If they mentioned factors that did not change, they were placed into partial identification instead. Less than 50% of respondents correctly identified any factor that changed between graphs. This signaled that there were issues with the results that were collected. Either the respondents were unable to interpret the graphs given to them, or they had begun to fill out the survey on autopilot. Both of these scenarios will hinder the accuracy of the results. However we had no a priori principles by which to exclude outliers, therefore they were left in the study.
 
 ```{r ri,fig.width=10,fig.height=10,fig.cap='Randomization Inference '}
 #2x2 histogram
@@ -277,7 +277,7 @@ mtext("c)", side=side, line=line, adj=adj)
 mtext('figure label',side=1,outer=TRUE,line=1)
 ```
 
-Randomization inference was used to generate p-values for each of the treatment conditions in comparison to control. Of High Variance (**Figure X**), Left-Skew (**Figure X**) and Right-Skew (**figure**), both Left-Skew (0.047) and Right-Skew (0.014) returned significant p-values at the 95% confidence level. Additionally, pairwise t-tests (**Table**) were also conducted on the samples. We report Bonferroni adjusted p-values. When uncorrected, both Left-Skew and Right-Skew t-tests returned significant p-values at the 95% confidence level. However when corrected, neither were significant. 
+Randomization inference was used to generate p-values for each of the treatment conditions in comparison to control. Of High Variance (Figure 7), Left-Skew (Figure 7) and Right-Skew (Figure 7), both Left-Skew (0.047) and Right-Skew (0.014) returned significant p-values at the 95% confidence level. Additionally, pairwise t-tests (Table 4) were also conducted on the samples. We report Bonferroni adjusted p-values. When uncorrected, both Left-Skew and Right-Skew t-tests returned significant p-values at the 95% confidence level. However when corrected, neither were significant. 
 
 ```{r}
 h_c<-t.test(highvar_group[, dif], control_group[, dif], alternative = "two.sided")$p.value
@@ -304,7 +304,7 @@ With this in mind, we do not believe that this provides an accurate representati
 
 ## Limitations
 
-Through the course of the experiment, there were a number of platform limitations in both platforms used to conduct the survey, Mechanical Turk and Qualtrics. Many of the issues lead to an increase in respondents attriting (*figure**) between surveys or half-way through a survey. Had these limitations been known beforehand, the experiment design could have been adjusted to accommodate. Unfortunately these limitations were discovered while conducting the experiment. 
+Through the course of the experiment, there were a number of platform limitations in both platforms used to conduct the survey, Mechanical Turk and Qualtrics. Many of the issues lead to an increase in respondents attriting (Figure 5) between surveys or half-way through a survey. Had these limitations been known beforehand, the experiment design could have been adjusted to accommodate. Unfortunately these limitations were discovered while conducting the experiment. 
 
 Mechanical Turk is subject to factors outside of experimental control. For example, surveys on Mechanical Turk are often subject to peer review. External websites like TurkOpticon are filled with users who post reviews for surveys being hosted on Mechanical Turk. These can act as positive or negative incentives for users on the platform. For example if a survey has overly negative reviews like “Too complicated for compensation offered”, other users will be disincentivized from attempting the survey. This effect is not consistent across the entire Mechanical Turk population either, as these are external review sites that not all users will use. Additionally, it is unfeasible to track the rating of this experiment’s survey across all the variety of Mechanical Turk survey review sites to ensure zero effect. 
 
