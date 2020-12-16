@@ -13,14 +13,13 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-
 #Packages used in analysis
 library(data.table)
 library(knitr)
+library(pwr)
 ```
 
-## Background on the Capital Asset Pricing Model
+# Background on the Capital Asset Pricing Model
 
 The Capital Asset Pricing Model (CAPM) and related models have arisen through the efforts of many renowned economists in the postwar period starting with Markowitz’s seminal 1952 essay on ‘Modern Portfolio Theory’ (MPT). Markowitz conceived of the portfolio construction problem as rooted in mean-variance ratio optimization. This line of research has since branched out into several related theories and conceptualizations of the portfolio construction process, rooted in the same fundamental idea that the optimal portfolio or set of portfolios can be identified through a sort of mean-variance optimization procedure. CAPM is one of the specific branches of Modern Portfolio Theory, and perhaps the most important as measured by its prominence in both undergraduate and graduate finance curricula. 
 
@@ -41,7 +40,7 @@ Fischer Black (1972) also contributed his own spin-off of CAPM, which differed m
 
 Of additional significance to the motivation behind this paper, skewness is not contemplated by CAPM as a factor that could potentially impact the relative pricing of assets. In other words: could the relationship depicted in Figure 1 actually be multivariate linear in variance and skewness rather than just univariate in variance?
 
-## Justification for Additional Experimentation
+# Justification for Additional Experimentation
 
 While the empirical justification for CAPM has received much attention by way of observational studies, including the prominent work by Fama and French (2004), and even some experimental settings such as Bossaerts and Plott (2002), we believe that our design has the potential to add upon existing literature in several interesting ways by taking on the 'shared distribution' assumption of Sharpe-Lintner in performing an *ex ante* measurement of responsiveness of risk premia to changing variance as well as testing for a significant effect of changing skewness from a reference distribution.
 
@@ -53,7 +52,7 @@ In order to test these hypotheses, it may be informative to test whether the mic
 
 We assume that respondents will assume a positive correlation between these notional assets and the market as a whole, which is the case for the overwhelming majority of securities. While we do not explicitly identify Beta, given a correlation coefficient with the market, Beta increases as the variance of the idiosyncratic asset increases and thus we consider this test to be sufficiently direct although not ideal.  While this is not ideal, we determined that the additional theoretical clarity may come at the expense of engagement from respondents, given the limitations of the electronic survey format.
 
-## Statement of Hypotheses
+# Statement of Hypotheses
 
 We formally state our research hypotheses as the following:
 
@@ -102,20 +101,24 @@ Utilizing the data collected through this structure, the following experimental 
 
 Thereafter, randomization inference and t-tests were conducted on the collected responses, comparing control to each of the other three outcome conditions. This allowed us to determine if the data support or reject the hypotheses outlined above.
 
+# Power Calculation
+
+Once aligned on this experimental design, we had initially conducted a power calculation to determine the N that we would need to collect to find a statistically significant difference between treatment groups. We had initially aligned that we would be looking
+
+```{r}
+pwr.t.test(d=0.75, sig.level=0.05, power=0.8, alternative="two.sided")
+```
+
 # Materials
 
 The distributions that were displayed to respondents were first generated through a Python script, included within the [Github repository for this project](https://github.com/john-woolley/w241-final-project). In particular, the `SciPy` and `SymPy` libraries to generate skew-normal distributions with given mean and variance. The quantiles of these distributions and their summary statistics (mean, median, standard deviation, and skewness) were calculated using `SciPy` and `Pandas`. Additionally, the distributions were plotted using the `matplotlib` library. The formulated visuals, as displayed to respondents, were as follows:
 
-*Reference/Control:*
 ![Reference/Control](images/Control.png)
 
-*High Variance:*
 ![High Variance](images/HighVariance.png)
 
-*Left Skew:*
 ![Left Skew](images/LeftSkew.png)
 
-*Right Skew:*
 ![Right Skew](images/RightSkew.png)
 
 Thereafter, a survey was created within the Qualtrics platform to facilitate randomization of subjects, display of these distributions, and collection of responses. In particular, the following two-step survey design was utilized:
@@ -145,6 +148,8 @@ Subjects for the survey were sourced via Amazon Mechanical Turk, a service that 
 Following data collection, the raw response data was loaded in CSV format into Microsoft Excel, allowing rapid merging of the data from the screening and main surveys. Thereafter, the merged CSV data was imported into and analyzed in R. In particular, the `data.table` package was used to select data, run statistical tests, and display appropriate visualizations.
 
 ```{r}
+knitr::opts_chunk$set(echo = FALSE)
+
 #Dataset
 data = fread('data/survey_data.csv')
 
@@ -213,7 +218,7 @@ row.names(pidt)<-c('Control','High Variance','Left-Skew','Right-Skew')
 
 ```
 
-### Analysis 
+# Analysis 
  
 The survey was set up to be active for a total of five days. At the end of this duration, a total of 903 individuals took the screening survey on Mechanical Turk. Of these 903, 598 respondents were screened out of the main survey by the aforementioned attention checks (176), or were otherwise deemed unfit for the main survey on the grounds of having not participated in online securities trading in the past five years (422). An additional 26 individuals were removed due to a failure to complete the screening survey. The rest of the 279 respondents were then sent a message containing an anonymous link to the main Qualtrics survey. A total of 153 respondents did not complete the main survey. 44 did not complete the main survey. 109 did not follow through to Qualtrics from the anonymous link given to them and were removed from the dataset. The remaining 126 respondents completed the survey. Two respondents received incorrect graphs for their treatment group and were removed. The rest were evenly divided into four groups (Control, High Variance, Left-Skew, Right-Skew). The group selection was made in the backend by Qualtrics’ pseudo-randomization algorithm before surveys were completed. 
 
@@ -274,7 +279,11 @@ mtext('figure label',side=1,outer=TRUE,line=1)
 
 Randomization inference was used to generate p-values for each of the treatment conditions in comparison to control. Of High Variance (**Figure X**), Left-Skew (**Figure X**) and Right-Skew (**figure**), both Left-Skew (0.047) and Right-Skew (0.014) returned significant p-values at the 95% confidence level. Additionally, pairwise t-tests (**Table**) were also conducted on the samples. We report Bonferroni adjusted p-values. When uncorrected, both Left-Skew and Right-Skew t-tests returned significant p-values at the 95% confidence level. However when corrected, neither were significant. 
 
-**TODO: T-Test Tables**
+```{r}
+t.test(highvar_group[, dif], control_group[, dif], alternative = "two.sided")$p.value
+t.test(leftskew_group[, dif], control_group[, dif], alternative = "two.sided")$p.value
+t.test(rightskew_group[, dif], control_group[, dif], alternative = "two.sided")$p.value
+```
 
 # Discussion
 
