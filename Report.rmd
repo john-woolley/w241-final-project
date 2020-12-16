@@ -105,7 +105,7 @@ Thereafter, randomization inference and t-tests were conducted on the collected 
 
 Once aligned on this experimental design, we had initially conducted a power calculation to determine the N that we would need to collect to find a statistically significant difference between treatment groups. We had initially aligned that we would be looking
 
-```{r , include=FALSE}
+```{r }
 knitr::opts_chunk$set(echo = FALSE)
 pwr.t.test(d=0.75, sig.level=0.05, power=0.8, alternative="two.sided")
 ```
@@ -148,7 +148,7 @@ Subjects for the survey were sourced via Amazon Mechanical Turk, a service that 
 
 Following data collection, the raw response data was loaded in CSV format into Microsoft Excel, allowing rapid merging of the data from the screening and main surveys. Thereafter, the merged CSV data was imported into and analyzed in R. In particular, the `data.table` package was used to select data, run statistical tests, and display appropriate visualizations.
 
-```{r, include=FALSE}
+```{r,include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
 #Dataset
@@ -227,7 +227,7 @@ The survey was set up to be active for a total of five days. At the end of this 
 
 Exploratory data analysis was first conducted on resulting data to query data quality. For each of the groups, the difference between question two (treatment) and question one (baseline) was calculated to determine the treatment effect for each respondent. These were then plotted as histograms to view the distribution of the population. 
 
-```{r dist, include=FALSE, fig.width=10,fig.height=10,fig.cap='Population distribution for (a) Control, (b) High Variance, (c) Left-Skew, (d) Right-Skew '}
+```{r dist, fig.width=10,fig.height=10,fig.cap='Population distribution for (a) Control, (b) High Variance, (c) Left-Skew, (d) Right-Skew '}
 knitr::opts_chunk$set(echo = FALSE)
 #2x2 histogram
 line = 1
@@ -257,7 +257,7 @@ kable(pidt,caption = "Percentage Identifying Treatment Condition",align="c")
 
 Because of some of these suspicious answers, a follow-up examination of respondent comprehension was conducted using the results of the survey debriefing question. In this question, respondents were asked to identify the difference between the first and second graphs they were presented. The expectation was that respondents who understood the question and were able to interpret the graphs presented to them would be able to point out the differences between the graphs. However, as seen in Table 3, the overall identification of treatment was very poor. As part of this analysis, perfect identification as well as partial identification were examined. A respondent was considered to have perfectly identified the treatment if they responded with only the factors that changed between their graphs. If they mentioned factors that did not change, they were placed into partial identification instead. Less than 50% of respondents correctly identified any factor that changed between graphs. This signaled that there were issues with the results that were collected. Either the respondents were unable to interpret the graphs given to them, or they had begun to fill out the survey on autopilot. Both of these scenarios will hinder the accuracy of the results. However we had no a priori principles by which to exclude outliers, therefore they were left in the study.
 
-```{r ri, include=FALSE, fig.width=10,fig.height=10,fig.cap='Randomization Inference '}
+```{r ri, fig.width=10,fig.height=10,fig.cap='Randomization Inference '}
 knitr::opts_chunk$set(echo = FALSE)
 #2x2 histogram
 line = 1
@@ -283,7 +283,7 @@ mtext('figure label',side=1,outer=TRUE,line=1)
 
 Randomization inference was used to generate p-values for each of the treatment conditions in comparison to control. Of High Variance (Figure 7), Left-Skew (Figure 7) and Right-Skew (Figure 7), both Left-Skew (0.047) and Right-Skew (0.014) returned significant p-values at the 95% confidence level. Additionally, pairwise t-tests (Table 4) were also conducted on the samples. We report Bonferroni adjusted p-values. When uncorrected, both Left-Skew and Right-Skew t-tests returned significant p-values at the 95% confidence level. However when corrected, neither were significant. 
 
-```{r, include=FALSE}
+```{r}
 knitr::opts_chunk$set(echo = FALSE)
 h_c<-t.test(highvar_group[, dif], control_group[, dif], alternative = "two.sided")$p.value
 l_c<-t.test(leftskew_group[, dif], control_group[, dif], alternative = "two.sided")$p.value
