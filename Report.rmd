@@ -103,12 +103,31 @@ Thereafter, randomization inference and t-tests were conducted on the collected 
 
 # Power Calculation
 
-Once aligned on this experimental design, we had initially conducted a power calculation to determine the N that we would need to collect to find a statistically significant difference between treatment groups. We had initially aligned that we would be looking
+Once aligned on this experimental design, we conducted a power calculation to determine the N that we would need to collect to find a statistically significant difference between treatment groups. We had initially aligned that we would be looking for significance at α = 0.05 and with a power β = 0.80. We didn't have a good sense for the effect size (Cohen's d) that we would achieve through the experiment, so we tested different variations of effect size and pooled standard deviation to determine the Ns that would be required to identify a significant effect. We outline these calculated d and N values in Tables 1 and 2.
 
-```{r }
+```{r}
 knitr::opts_chunk$set(echo = FALSE)
-pwr.t.test(d=0.75, sig.level=0.05, power=0.8, alternative="two.sided")
+
+dmat = matrix(, nrow = 5, ncol = 5)
+colnames(dmat) = seq(from = 2, to = 10, by = 2)
+rownames(dmat) = 1:5
+
+nmat = matrix(, nrow = 5, ncol = 5)
+colnames(nmat) = seq(from = 2, to = 10, by = 2)
+rownames(nmat) = 1:5
+
+for(row in 1:5){
+  for(col in 1:5){
+    dmat[row, col] = round(col / row / 2, 2)
+    nmat[row, col] = round(pwr.t.test(d=col / row / 2, sig.level=0.05, power=0.8, alternative="two.sided")$n, 0)
+  }
+}
+
+kable(dmat,caption = "Cohen's d values calculated based on the ATE (columns) and pooled standard deviation (rows)",align="c")
+kable(nmat,caption = "N values calculated based on the ATE (columns) and pooled standard deviation (rows)",align="c")
 ```
+
+Conservatively estimating a Cohen's d of 0.5 among the collected data, we were looking to capture ~65 responses per treatment group.
 
 # Materials
 
