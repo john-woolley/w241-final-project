@@ -8,8 +8,13 @@ header-includes:
  - \setlength{\parindent}{4em}
  - \setlength{\parskip}{.5em}
  - \usepackage{indentfirst}
-output: pdf_document
-
+ - \usepackage{float}
+ - \floatplacement{figure}{H}
+output:
+  pdf_document:
+      extra_dependencies: ["float"]
+  html_document: default
+urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
@@ -17,6 +22,7 @@ output: pdf_document
 library(data.table)
 library(knitr)
 library(pwr)
+knitr::opts_chunk$set(fig.pos = "!h", out.extra = "")
 ```
 
 # Background on the Capital Asset Pricing Model
@@ -33,7 +39,8 @@ Sharpe (1964) and Lintner (1965) extended this framework to what is now called t
 
 To find a mean-variance efficient portfolio, we pivot the “line” anchored at $R_f$ on the y-axis up and to the left until we reach a tangency with the aforementioned parabola (point $T$). Having found this line, we have maximized the ratio of expected return to expected variance for risky assets subject to the existing minimum variance frontier. This is what Sharpe calls the ‘capital market line’ in his 1964 paper. Its slope is estimated as the quantity $\beta$.
 
-![CAPM theory as illustrated by Fama and French (2004)](images/capm_theory.png)
+![CAPM theory as illustrated by Fama and French (2004)](images/capm_theory.png)  
+
 Therefore, one way to directly test the validity of CAPM is to ascertain whether investors in practice are capable of ‘drawing’ this line in a manner consistent with CAPM, given a common distribution of returns, when variance increases, the demanded risk premium should also increase *ex ante*. 
 
 Fischer Black (1972) also contributed his own spin-off of CAPM, which differed mainly in trading off the assumption of unlimited borrowing and lending at the risk-free rate for one of unlimited short-selling. Another implication of this model is that the y-intercept of the line in Figure 1 is not necessarily the risk-free rate, but potentially any rate lower than the market rate of return, which yields a less restrictive model. However, he still postulates that the slope of the mean-variance efficiency line ($\beta$) is positive.
@@ -105,16 +112,16 @@ Thereafter, randomization inference and t-tests were conducted on the collected 
 
 Once aligned on this experimental design, we conducted a power calculation to determine the N that we would need to collect to find a statistically significant difference between treatment groups. We had initially aligned that we would be looking for significance at $\alpha$ = 0.05 and with a power $\beta$ = 0.80. We didn't have a good sense for the effect size (Cohen's d) that we would achieve through the experiment, so we tested different variations of effect size and pooled standard deviation to determine the Ns that would be required to identify a significant effect. We outline these calculated d and N values in Tables 1 and 2.
 
-```{r}
+```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
 dmat = matrix(, nrow = 5, ncol = 5)
 colnames(dmat) = seq(from = 2, to = 10, by = 2)
-rownames(dmat) = 1:5
+rownames(dmat) = c('1','2','3','4','5')
 
 nmat = matrix(, nrow = 5, ncol = 5)
 colnames(nmat) = seq(from = 2, to = 10, by = 2)
-rownames(nmat) = 1:5
+rownames(nmat) = c('1','2','3','4','5')
 
 for(row in 1:5){
   for(col in 1:5){
@@ -122,16 +129,17 @@ for(row in 1:5){
     nmat[row, col] = round(pwr.t.test(d=col / row / 2, sig.level=0.05, power=0.8, alternative="two.sided")$n, 0)
   }
 }
-
-kable(dmat,caption = "Cohen's d values calculated based on the ATE (columns) and pooled standard deviation (rows)",align="c")
-kable(nmat,caption = "N values calculated based on the ATE (columns) and pooled standard deviation (rows)",align="c")
+```
+```{r}
+kable(dmat,caption = "Cohen's d values calculated based on the ATE (columns) and pooled standard deviation (rows)",align="c",row.names = TRUE)
+kable(nmat,caption = "N values calculated based on the ATE (columns) and pooled standard deviation (rows)",align="c",row.names=TRUE)
 ```
 
 Conservatively estimating a Cohen's d of 0.5 among the collected data, we were looking to capture ~65 responses per treatment group.
 
 # Materials
 
-The distributions that were displayed to respondents were first generated through a Python script, included within the [Github repository for this project](https://github.com/john-woolley/w241-final-project). In particular, the `SciPy` and `SymPy` libraries to generate skew-normal distributions with given mean and variance. The quantiles of these distributions and their summary statistics (mean, median, standard deviation, and skewness) were calculated using `SciPy` and `Pandas`. Additionally, the distributions were plotted using the `matplotlib` library. The formulated visuals, as displayed to respondents, are included as Figures 1 through 4.
+The distributions that were displayed to respondents were first generated through a Python script, included within the [Github repository for this project](https://github.com/john-woolley/w241-final-project). In particular, the `SciPy` and `SymPy` libraries to generate skew-normal distributions with given mean and variance. The quantiles of these distributions and their summary statistics (mean, median, standard deviation, and skewness) were calculated using `SciPy` and `Pandas`. Additionally, the distributions were plotted using the `matplotlib` library. The formulated visuals, as displayed to respondents, are included as Figures 2 through 5.
 
 ![Reference/Control](images/Control.png)
 
@@ -266,7 +274,7 @@ mtext("d)", side=side, line=line, adj=adj)
 mtext('figure label',side=1,outer=TRUE,line=1)
 ```
 
-For the Control Group, both questions used the same graph with no variation or skewness. As a result, it would be expected that the respondents would reply with the same value for both questions, rendering the mean difference as zero. As seen in Figure 6 a, the majority of respondents had zero or close to zero mean deltas. However there are some outliers at -90 and -50 respectively. As a result, the average mean delta for the control group is -6.08. This was the first sign that the quality of respondents will need additional scrutiny. Similar outliers also appear in Left-Skew (Figure 6 c) and Right-Skew (Figure 6 d) groups. 
+For the Control Group, both questions used the same graph with no variation or skewness. As a result, it would be expected that the respondents would reply with the same value for both questions, rendering the mean difference as zero. As seen in Figure 7 a, the majority of respondents had zero or close to zero mean deltas. However there are some outliers at -90 and -50 respectively. As a result, the average mean delta for the control group is -6.08. This was the first sign that the quality of respondents will need additional scrutiny. Similar outliers also appear in Left-Skew (Figure 7 c) and Right-Skew (Figure 7 d) groups. 
 
 ```{r}
 knitr::opts_chunk$set(echo = FALSE)
@@ -300,7 +308,7 @@ mtext("c)", side=side, line=line, adj=adj)
 mtext('figure label',side=1,outer=TRUE,line=1)
 ```
 
-Randomization inference was used to generate p-values for each of the treatment conditions in comparison to control. Of High Variance (Figure 7), Left-Skew (Figure 7) and Right-Skew (Figure 7), both Left-Skew (0.047) and Right-Skew (0.014) returned significant p-values at the 95% confidence level. Additionally, pairwise t-tests (Table 4) were also conducted on the samples. We report Bonferroni adjusted p-values. When uncorrected, both Left-Skew and Right-Skew t-tests returned significant p-values at the 95% confidence level. However when corrected, neither were significant. 
+Randomization inference was used to generate p-values for each of the treatment conditions in comparison to control. Of High Variance, Left-Skew, and Right-Skew (Figure 8), both Left-Skew (0.047) and Right-Skew (0.014) returned significant p-values at the 95% confidence level. Additionally, pairwise t-tests (Table 4) were also conducted on the samples. We report Bonferroni adjusted p-values. When uncorrected, both Left-Skew and Right-Skew t-tests returned significant p-values at the 95% confidence level. However when corrected, neither were significant. 
 
 ```{r}
 knitr::opts_chunk$set(echo = FALSE)
@@ -330,7 +338,7 @@ With this in mind, we do not believe that this provides an accurate representati
 
 One limitation of our study was too small to reach the desired power.  Assuming an average $d$ of 0.5, we would have required about 63 respondents per group, but got about half of that amount.  The return rate of qualified respondents on our pilot survey was 80% but we only achieved a 50% response rate with the main survey.  Also, we ran out of budget on the overall sample because we had to assume that every respondent would return to prevent any of them from being locked out from the MTurk batch given MTurk's prepaid system.
 
-Through the course of the experiment, there were a number of platform limitations as well in both platforms used to conduct the survey, Mechanical Turk and Qualtrics. Many of the issues lead to an increase in respondents attriting (Figure 5) between surveys or half-way through a survey. Had these limitations been known beforehand, the experiment design could have been adjusted to accommodate. Unfortunately these limitations were discovered while conducting the experiment. 
+Through the course of the experiment, there were a number of platform limitations as well in both platforms used to conduct the survey, Mechanical Turk and Qualtrics. Many of the issues lead to an increase in respondents attriting (Figure 6) between surveys or half-way through a survey. Had these limitations been known beforehand, the experiment design could have been adjusted to accommodate. Unfortunately these limitations were discovered while conducting the experiment. 
 
 Mechanical Turk is subject to factors outside of experimental control. For example, surveys on Mechanical Turk are often subject to peer review. External websites like TurkOpticon are filled with users who post reviews for surveys being hosted on Mechanical Turk. These can act as positive or negative incentives for users on the platform. For example if a survey has overly negative reviews like “Too complicated for compensation offered”, other users will be disincentivized from attempting the survey. This effect is not consistent across the entire Mechanical Turk population either, as these are external review sites that not all users will use. Additionally, it is unfeasible to track the rating of this experiment’s survey across all the variety of Mechanical Turk survey review sites to ensure zero effect. 
 
