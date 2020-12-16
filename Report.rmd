@@ -1,6 +1,6 @@
 ---
 title: "Investigating the theorized relationship between perceived risk and variance under CAPM"
-author: "John Woolley, Clayton Monis and Derrick Hee"
+author: "John Woolley, Clayton Monis, Derrick Hee, and Jacob Han"
 abstract: "This study proposes an experimental design to investigate whether the theorized relationship between investor-assigned risk premia and expected variance under the Capital Asset Pricing Model (CAPM) holds true in practice. At a conceptual level, our experiment seeks to answer the questions: given a fixed date in the future, how does varying the (1) variance and (2) skewness of price returns over the holding period affect a subject’s perception of a fair market price today?"
 date: "December 16, 2020"
 indent: true
