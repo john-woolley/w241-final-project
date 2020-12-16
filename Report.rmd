@@ -61,9 +61,7 @@ We assume that respondents will assume a positive correlation between these noti
 
 # Statement of Hypotheses
 
-We formally state our research hypotheses as the following:
-
-Controlling for individual differences in risk preferences, increasing the variance of the distribution of future asset prices will lead to investors demanding a larger risk premium (i.e., that the difference between the mean of the distribution and the maximum price they are willing to pay for the asset will become more positive).
+We formally state our research hypotheses as the following: Controlling for individual differences in risk preferences, increasing the variance of the distribution of future asset prices will lead to investors demanding a larger risk premium (i.e., that the difference between the mean of the distribution and the maximum price they are willing to pay for the asset will become more positive).
 Null Hypothesis: Increasing the variance of the distribution of future prices has no effect on the risk premium demanded
 Alternative Hypothesis particular to CAPM: Increasing the variance of the distribution of future prices increases the risk premium demanded
 Controlling for individual differences in risk preferences, making the skewness of a distribution of future asset prices more positive or more negative will have a significant effect on the risk premium demanded by investors.
