@@ -103,7 +103,7 @@ Thereafter, randomization inference and t-tests were conducted on the collected 
 
 # Power Calculation
 
-Once aligned on this experimental design, we conducted a power calculation to determine the N that we would need to collect to find a statistically significant difference between treatment groups. We had initially aligned that we would be looking for significance at α = 0.05 and with a power β = 0.80. We didn't have a good sense for the effect size (Cohen's d) that we would achieve through the experiment, so we tested different variations of effect size and pooled standard deviation to determine the Ns that would be required to identify a significant effect. We outline these calculated d and N values in Tables 1 and 2.
+Once aligned on this experimental design, we conducted a power calculation to determine the N that we would need to collect to find a statistically significant difference between treatment groups. We had initially aligned that we would be looking for significance at $\alpha$ = 0.05 and with a power $\beta$ = 0.80. We didn't have a good sense for the effect size (Cohen's d) that we would achieve through the experiment, so we tested different variations of effect size and pooled standard deviation to determine the Ns that would be required to identify a significant effect. We outline these calculated d and N values in Tables 1 and 2.
 
 ```{r}
 knitr::opts_chunk$set(echo = FALSE)
@@ -131,7 +131,7 @@ Conservatively estimating a Cohen's d of 0.5 among the collected data, we were l
 
 # Materials
 
-The distributions that were displayed to respondents were first generated through a Python script, included within the [Github repository for this project](https://github.com/john-woolley/w241-final-project). In particular, the `SciPy` and `SymPy` libraries to generate skew-normal distributions with given mean and variance. The quantiles of these distributions and their summary statistics (mean, median, standard deviation, and skewness) were calculated using `SciPy` and `Pandas`. Additionally, the distributions were plotted using the `matplotlib` library. The formulated visuals, as displayed to respondents, were as follows:
+The distributions that were displayed to respondents were first generated through a Python script, included within the [Github repository for this project](https://github.com/john-woolley/w241-final-project). In particular, the `SciPy` and `SymPy` libraries to generate skew-normal distributions with given mean and variance. The quantiles of these distributions and their summary statistics (mean, median, standard deviation, and skewness) were calculated using `SciPy` and `Pandas`. Additionally, the distributions were plotted using the `matplotlib` library. The formulated visuals, as displayed to respondents, are included as Figures 1 through 4.
 
 ![Reference/Control](images/Control.png)
 
