@@ -13,7 +13,11 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
+
+#Packages used in analysis
+library(data.table)
+library(knitr)
 ```
 
 ## Background on the Capital Asset Pricing Model
@@ -103,16 +107,16 @@ Thereafter, randomization inference and t-tests were conducted on the collected 
 The distributions that were displayed to respondents were first generated through a Python script, included within the [Github repository for this project](https://github.com/john-woolley/w241-final-project). In particular, the `SciPy` and `SymPy` libraries to generate skew-normal distributions with given mean and variance. The quantiles of these distributions and their summary statistics (mean, median, standard deviation, and skewness) were calculated using `SciPy` and `Pandas`. Additionally, the distributions were plotted using the `matplotlib` library. The formulated visuals, as displayed to respondents, were as follows:
 
 *Reference/Control:*
-![Reference/Control](Control.png)
+![Reference/Control](images/Control.png)
 
 *High Variance:*
-![High Variance](HighVariance.png)
+![High Variance](images/HighVariance.png)
 
 *Left Skew:*
-![Left Skew](LeftSkew.png)
+![Left Skew](images/LeftSkew.png)
 
 *Right Skew:*
-![Right Skew](RightSkew.png)
+![Right Skew](images/RightSkew.png)
 
 Thereafter, a survey was created within the Qualtrics platform to facilitate randomization of subjects, display of these distributions, and collection of responses. In particular, the following two-step survey design was utilized:
 
@@ -140,16 +144,9 @@ Subjects for the survey were sourced via Amazon Mechanical Turk, a service that 
 
 Following data collection, the raw response data was loaded in CSV format into Microsoft Excel, allowing rapid merging of the data from the screening and main surveys. Thereafter, the merged CSV data was imported into and analyzed in R. In particular, the `data.table` package was used to select data, run statistical tests, and display appropriate visualizations.
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-
-#Packages used in analysis
-library(data.table)
-library(knitr)
-
+```{r}
 #Dataset
-data = fread('W241 Final Project - Completed.csv')
-
+data = fread('data/survey_data.csv')
 
 #Histogram of Control Group
 control_group = data[Treatment == 1, .(ref = Q2_1_1, obs = Q3_1_1, refdif = 100.37 - Q2_1_1, obsdif = 100.37 - Q3_1_1)]
